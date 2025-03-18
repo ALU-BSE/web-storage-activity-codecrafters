@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>E-Commerce Demo</title>
+  <style>
+    body.dark { 
+      background-color: black; 
+      color: white; 
+    }
+
+    body.light { 
+      background-color: white; 
+      color: black; 
+    }
+
+    #cartItems { 
+      list-style-type: none; 
+    }
+  </style>
+</head>
+<body>
+  <!-- User Login Form -->
+  <div id="loginForm">
+    <h3>Login</h3>
+    <input type="text" id="username" placeholder="Username" required><br>
+    <input type="password" id="password" placeholder="Password" required><br>
+    <button id="loginButton">Login</button>
+  </div>
+
+  <!-- Logout Button (hidden initially) -->
+  <button id="logoutButton" style="display:none;">Logout</button>
+
+  <!-- Theme Preference Toggle -->
+  <button id="toggleTheme">Toggle Theme</button>
+
+  <!-- Shopping Cart Section -->
+  <h3>Shopping Cart</h3>
+  <button id="addToCart">Add Book to Cart</button>
+  <ul id="cartItems"></ul>
+
+  <!-- CSRF Token and Form -->
+  <form id="csrfForm">
+    <input type="text" id="userInput" placeholder="Enter some text" required>
+    <button type="submit">Submit</button>
+  </form>
+
+  <!-- Link to External JS file -->
+  <script src="script.js"></script>
+</body>
+</html>
