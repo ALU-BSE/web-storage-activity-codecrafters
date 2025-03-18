@@ -52,12 +52,9 @@ function showMessage(elementId, message, type) {
 
 // Function to set up login form and event listeners
 function setupAuth() {
-    // Generate CSRF token for forms 
+    // Generate CSRF token for forms (Task 4)
     const csrfToken = Math.random().toString(36).substr(2);
     document.getElementById("csrfToken").value = csrfToken;
-    
-    // Check if user is logged in
-    checkAuthStatus();
     
     // Login form submission
     document.getElementById('loginForm').addEventListener('submit', function(e) {
@@ -68,30 +65,41 @@ function setupAuth() {
         const email = document.getElementById('email').value;
         const formCsrfToken = document.getElementById('csrfToken').value;
         
-        // Check if CSRF token is valid 
+        // Check if CSRF token is valid (in a real app, this would be validated on the server)
         if (formCsrfToken !== csrfToken) {
             showMessage('loginMessage', 'Invalid CSRF token. Please refresh the page.', 'error');
             return;
         }
         
+        // Set authentication cookie (in real app, this would be a secure token from server)
+        // Even if credentials are empty, we'll still proceed for this demo
+        const expirationDate = new Date();
+        expirationDate.setDate(expirationDate.getDate() + 7); // 7 days from now
         
-        if (username && password) {
-            // Set authentication cookie r)
-            const expirationDate = new Date();
-            expirationDate.setDate(expirationDate.getDate() + 7); // 7 days from now
-            
-           
-            document.cookie = `authToken=${username}123; expires=${expirationDate.toUTCString()}; path=/; SameSite=Strict`;
-            
-            // Store encrypted email in local storage 
-            const encryptedEmail = CryptoJS.AES.encrypt(email, 'demo-secret-key').toString();
-            localStorage.setItem('userEmail', encryptedEmail);
-            
-            showMessage('loginMessage', 'Login successful!', 'success');
-            checkAuthStatus(); // Update UI based on auth status
-        } else {
-            showMessage('loginMessage', 'Please enter both username and password', 'error');
+        // In a real application, this would be set by the server with HttpOnly flag
+        // For demo purposes, we're setting it in JS
+        document.cookie = `authToken=${username || 'guest'}123; expires=${expirationDate.toUTCString()}; path=/; SameSite=Strict`;
+        
+        // Store encrypted email in local storage (Task 4 security challenge)
+        const emailToStore = email || 'guest@example.com';
+        const encryptedEmail = CryptoJS.AES.encrypt(emailToStore, 'demo-secret-key').toString();
+        localStorage.setItem('userEmail', encryptedEmail);
+        
+        // Always show authenticated content regardless of credentials
+        document.getElementById('loginSection').style.display = 'none';
+        document.getElementById('authenticatedContent').style.display = 'block';
+        document.getElementById('userSection').style.display = 'flex';
+        
+        // Update user email display
+        try {
+            const decryptedBytes = CryptoJS.AES.decrypt(encryptedEmail, 'demo-secret-key');
+            const decryptedEmail = decryptedBytes.toString(CryptoJS.enc.Utf8);
+            document.getElementById('userEmail').textContent = decryptedEmail;
+        } catch (e) {
+            console.error('Error decrypting email:', e);
         }
+        
+        showMessage('loginMessage', 'Login successful!', 'success');
     });
     
     // Logout button
@@ -99,7 +107,15 @@ function setupAuth() {
         // Delete the auth cookie
         document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;";
         localStorage.removeItem('userEmail');
-        checkAuthStatus(); // Update UI based on auth status
+        
+        // Redirect to login screen
+        document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('authenticatedContent').style.display = 'none';
+        document.getElementById('userSection').style.display = 'none';
+        
         showMessage('loginMessage', 'You have been logged out.', 'success');
     });
+    
+    // Initial check for authentication status
+    checkAuthStatus();
 }
