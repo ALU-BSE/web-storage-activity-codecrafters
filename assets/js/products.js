@@ -2,12 +2,12 @@
 
 // Product data
 const products = [
-    { id: 1, name: "Wireless Headphones", price: 89.99, image: "headphones.jpg" },
-    { id: 2, name: "Smart Watch", price: 129.99, image: "watch.jpg" },
-    { id: 3, name: "Bluetooth Speaker", price: 59.99, image: "speaker.jpg" },
-    { id: 4, name: "Laptop Backpack", price: 49.99, image: "backpack.jpg" },
+    { id: 1, name: "Wireless Headphones", price: 89.99, image: "wirelessheadphones.jpg" },
+    { id: 2, name: "Smart Watch", price: 129.99, image: "smartwatch.jpg" },
+    { id: 3, name: "Bluetooth Speaker", price: 59.99, image: "wirelessspeaker.jpg" },
+    { id: 4, name: "Laptop Backpack", price: 49.99, image: "laptopbackpack.jpg" },
     { id: 5, name: "Power Bank", price: 39.99, image: "powerbank.jpg" },
-    { id: 6, name: "Wireless Mouse", price: 24.99, image: "mouse.jpg" }
+    { id: 6, name: "Wireless Mouse", price: 24.99, image: "wirelessmouse.jpg" }
 ];
 
 // Function to initialize product list
