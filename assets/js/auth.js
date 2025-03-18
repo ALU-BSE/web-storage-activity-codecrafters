@@ -52,7 +52,7 @@ function showMessage(elementId, message, type) {
 
 // Function to set up login form and event listeners
 function setupAuth() {
-    // Generate CSRF token for forms (Task 4)
+    // Generate CSRF token for forms 
     const csrfToken = Math.random().toString(36).substr(2);
     document.getElementById("csrfToken").value = csrfToken;
     
@@ -65,22 +65,19 @@ function setupAuth() {
         const email = document.getElementById('email').value;
         const formCsrfToken = document.getElementById('csrfToken').value;
         
-        // Check if CSRF token is valid (in a real app, this would be validated on the server)
+        // Check if CSRF token is valid 
         if (formCsrfToken !== csrfToken) {
             showMessage('loginMessage', 'Invalid CSRF token. Please refresh the page.', 'error');
             return;
         }
         
-        // Set authentication cookie (in real app, this would be a secure token from server)
-        // Even if credentials are empty, we'll still proceed for this demo
+        // Set authentication cookie emo
         const expirationDate = new Date();
         expirationDate.setDate(expirationDate.getDate() + 7); // 7 days from now
         
-        // In a real application, this would be set by the server with HttpOnly flag
-        // For demo purposes, we're setting it in JS
         document.cookie = `authToken=${username || 'guest'}123; expires=${expirationDate.toUTCString()}; path=/; SameSite=Strict`;
         
-        // Store encrypted email in local storage (Task 4 security challenge)
+        // Store encrypted email in local storage 
         const emailToStore = email || 'guest@example.com';
         const encryptedEmail = CryptoJS.AES.encrypt(emailToStore, 'demo-secret-key').toString();
         localStorage.setItem('userEmail', encryptedEmail);
