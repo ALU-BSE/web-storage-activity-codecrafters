@@ -74,7 +74,7 @@ function updateCartDisplay() {
             const itemTotal = item.price * item.quantity;
             totalPrice += itemTotal;
             
-            // Sanitize product name for security (Task 4)
+            // Sanitize product name for security 
             const sanitizedProduct = encodeURIComponent(item.product);
             
             cartHTML += `
