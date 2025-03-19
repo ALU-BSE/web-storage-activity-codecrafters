@@ -66,7 +66,7 @@ project-root/
 2. Use the "A-" and "A+" buttons in the Theme Settings section to decrease or increase font size
 
 ### Shopping Cart
-1. Browse the product catalog
+1. Browse the product catal
 2. Click "Add to Cart" for any product you want to purchase
 3. View your cart items and total at the bottom of the page
 4. The cart counter will update to show the number of items in your cart
