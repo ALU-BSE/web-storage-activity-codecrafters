@@ -106,7 +106,7 @@ function setupAuth() {
         localStorage.removeItem('userEmail');
         
         // Redirect to login screen
-        document.getElementById('loginSection').style.display = 'block';
+        document.getElementById('loginSection').style.display = 'blo';
         document.getElementById('authenticatedContent').style.display = 'none';
         document.getElementById('userSection').style.display = 'none';
         
