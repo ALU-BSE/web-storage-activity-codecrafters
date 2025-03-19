@@ -358,3 +358,5 @@ input:checked + .slider:before {
 #headerCartCount {
     font-weight: bold;
 }
+
+/*  media query */
