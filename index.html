@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-Commerce Demo - Web Storage Implementation</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/crypto-js/4.1.1/crypto-js.min.js"></script>
+    <link rel="stylesheet" href="assets/css/styles.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">ShopSmart</div>
+                <div class="header-controls">
+                    <div id="userSection" class="user-section" style="display: none;">
+                        <span class="user-email" id="userEmail"></span>
+                        <button id="logoutBtn" class="btn btn-outline">Logout</button>
+                    </div>
+                    <!-- Theme toggle with labels -->
+                    <div class="theme-toggle-wrapper">
+                        <span class="theme-icon">☀️</span>
+                        <label class="toggle-switch small-toggle">
+                            <input type="checkbox" id="themeToggle">
+                            <span class="slider"></span>
+                        </label>
+                        <span class="theme-icon">🌙</span>
+                    </div>
+                    <!-- Cart count indicator -->
+                    <div class="cart-indicator">
+                        <span class="cart-icon">🛒</span>
+                        <span id="headerCartCount">0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Login Section -->
+        <div id="loginSection" class="login-section">
+            <h2>Login</h2>
+            <div id="loginMessage" class="message" style="display: none;"></div>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="email">Email:</label>
+                    <input type="email" id="email" name="email" required>
+                </div>
+                <input type="hidden" id="csrfToken" name="csrfToken">
+                <button type="submit" class="btn btn-primary">Login</button>
+            </form>
+        </div>
+
+        <!-- Authenticated Content -->
+        <div id="authenticatedContent" class="authenticated-content">
+            <!-- Theme Preferences -->
+            <div class="theme-section">
+                <h2>Theme Settings</h2>
+                <div class="settings-panel">
+                    <div class="form-group">
+                        <label>Font Size:</label>
+                        <div class="font-size-controls">
+                            <button id="decreaseFontBtn" class="btn btn-outline">A-</button>
+                            <span id="currentFontSize">16</span>px
+                            <button id="increaseFontBtn" class="btn btn-outline">A+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Cart count section  -->
+            <div class="cart-count-section">
+                <h2>Shopping Cart</h2>
+                <div class="cart-status">
+                    <span class="cart-label">Items in cart:</span>
+                    <span id="cartCount" class="cart-number">0</span>
+                </div>
+            </div>
+
+            <!-- Products Section -->
+            <div class="products-section">
+                <h2>Products</h2>
+                <div class="products-grid">
+                    
+                </div>
+            </div>
+
+            <!-- Shopping Cart  -->
+            <div class="cart-section">
+                <h2>Your cart</h2>
+                <div id="cartItems" class="cart-items">
+                    
+                    <div class="empty-cart">Your cart is empty</div>
+                </div>
+                <div class="cart-total">
+                    Total: $<span id="cartTotal">0.00</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Files -->
+    <script src="assets/js/auth.js"></script>
+    <script src="assets/js/cart.js"></script>
+    <script src="assets/js/products.js"></script>
+    <script src="assets/js/theme.js"></script>
+    <script src="assets/js/app.js"></script>
+</body>
+</html>

@@ -1,119 +1,130 @@
+# E-Commerce Web Storage Implementation
 
-**Group Activity: Implementing Web Storage Mechanisms in an E-Commerce Site**  
-*Objective:* Apply knowledge of Cookies, Local Storage, and Session Storage to build a secure and functional e-commerce demo.  
+This project demonstrates the implementation of various web storage mechanisms (Cookies, Local Storage, and Session Storage) in an e-commerce application. The application includes user authentication, theme customization, shopping cart functionality, and security measures.
 
----
+## Features
 
-### **Task 1: User Authentication with Cookies**  
-**Scenario:** Implement a login system using cookies to retain user sessions.  
-1. Create a login form with `username` and `password` fields.  
-2. On form submission, set a **secure cookie** named `authToken` with a dummy value (e.g., "user123").  
-   - Ensure the cookie uses `HttpOnly` and `Secure` flags.  
-   - Set an expiration date of 7 days.  
-3. Display a "Logout" button that deletes the `authToken` cookie.  
+### User Authentication with Cookies
+- Secure login system using cookies to retain user sessions
+- Cookie-based authentication with 7-day expiration
+- Logout functionality that clears authentication cookies
 
-**Code Skeleton:**  
-```javascript
-// Set cookie on login
-document.cookie = "authToken=user123; expires=Fri, 31 Dec 2024 12:00:00 UTC; Secure; HttpOnly; path=/";
+### Theme Preferences with Local Storage
+- Persistent theme settings (light/dark mode) using local storage
+- Font size customization stored in local storage
+- Settings are saved across browser sessions
 
-// Delete cookie on logout
-document.cookie = "authToken=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/";
-```
+### Shopping Cart with Session Storage
+- Session-specific shopping cart that resets when the browser is closed
+- Add to cart functionality
+- Dynamic cart display with item count and total price
 
-**Questions:**  
-- Why are `HttpOnly` and `Secure` flags important for cookies?  
-- How do session cookies differ from persistent cookies in this context?  
+### Security Implementations
+- Input sanitization using encodeURIComponent
+- CSRF token generation and validation
+- Sensitive data encryption in local storage using CryptoJS
 
----
+## Project Structure
+project-root/
+│
+├── index.html                 # Main HTML file
+├── assets/
+│   ├── css/
+│   │   └── styles.css         # Styles for the application
+│   ├── js/
+│   │   ├── auth.js            # Authentication functionality
+│   │   ├── cart.js            # Shopping cart functionality
+│   │   ├── products.js        # Product display functionality
+│   │   ├── theme.js           # Theme management functionality
+│   │   └── app.js             # Main script that initializes everything
+│   └── images/
+│       ├── headphones.jpg     # Product images
+│       ├── watch.jpg
+│       ├── speaker.jpg
+│       ├── backpack.jpg
+│       ├── powerbank.jpg
+│       └── mouse.jpg
 
-### **Task 2: Theme Preferences with Local Storage**  
-**Scenario:** Allow users to save their preferred theme (light/dark mode).  
-1. Add a theme toggle button to the page.  
-2. Store the selected theme ("light" or "dark") in **local storage**.  
-3. Retrieve the theme on page load and apply it automatically.  
+## Setup Instructions
 
-**Code Skeleton:**  
-```javascript
-// Save theme preference
-localStorage.setItem("theme", "dark");
+1. **Clone or download the project files** to your local machine
 
-// Retrieve theme
-const savedTheme = localStorage.getItem("theme");
-document.body.classList.add(savedTheme);
-```
+2. **Ensure all files are in the correct folder structure** as shown above
 
-**Challenge:**  
-- Use `JSON.stringify` and `JSON.parse` to store/retrieve a settings object (e.g., `{ theme: "dark", fontSize: 16 }`).  
+3. **Open `index.html`** in your web browser
 
-**Questions:**  
-- What happens if local storage exceeds its size limit? How would you handle this?  
+## How to Use
 
----
+### Authentication
+1. Enter a username, password, and email in the login form
+2. Click "Login" to authenticate
+3. The login section will be replaced with the product display and cart
+4. Click "Logout" in the header to end your session
 
-### **Task 3: Session-Specific Shopping Cart**  
-**Scenario:** Implement a cart that resets when the browser closes.  
-1. Use **session storage** to store cart items (e.g., `{ product: "Book", quantity: 2 }`).  
-2. Add a "Add to Cart" button that updates the cart.  
-3. Display cart items dynamically.  
+### Theme Customization
+1. Toggle the switch in the top-right corner to switch between light and dark modes
+2. Use the "A-" and "A+" buttons in the Theme Settings section to decrease or increase font size
 
-**Code Skeleton:**  
-```javascript
-// Add item to cart
-const cart = JSON.parse(sessionStorage.getItem("cart")) || [];
-cart.push({ product: "Book", quantity: 1 });
-sessionStorage.setItem("cart", JSON.stringify(cart));
-```
+### Shopping Cart
+1. Browse the product catalog
+2. Click "Add to Cart" for any product you want to purchase
+3. View your cart items and total at the bottom of the page
+4. The cart counter will update to show the number of items in your cart
 
-**Debugging:**  
-- Intentionally introduce an error (e.g., forget `JSON.parse`) and ask students to fix it.  
+## Security Features
 
-**Questions:**  
-- Why is session storage suitable for this use case?  
+- **HttpOnly and Secure Flags**: Simulated in this demo but would be properly implemented server-side in production
+- **CSRF Protection**: Random tokens are generated for form submissions
+- **XSS Prevention**: User input is sanitized before being displayed
+- **Data Encryption**: User email is encrypted in local storage using CryptoJS
 
----
+## Dependencies
 
-### **Task 4: Security Implementation**  
-**Scenario:** Secure the application against XSS and CSRF attacks.  
-1. Sanitize user input using `encodeURIComponent` before displaying it on the page.  
-2. Generate a CSRF token on the server (simulate with `Math.random()`) and include it in forms.  
+- **CryptoJS**: Used for encrypting sensitive data (loaded from CDN)
 
-**Code Skeleton:**  
-```javascript
-// Sanitize input
-const userInput = "<script>alert('XSS')</script>";
-const sanitizedInput = encodeURIComponent(userInput);
+## Browser Storage Information
 
-// Add CSRF token to form
-const csrfToken = Math.random().toString(36).substr(2);
-document.getElementById("form").innerHTML += `<input type="hidden" name="csrfToken" value="${csrfToken}">`;
-```
+| Feature | Storage Type | Purpose | Persistence |
+|---------|--------------|---------|-------------|
+| User Authentication | Cookies | Store user login state | 7 days |
+| Theme Settings | Local Storage | Remember user preferences | Until cleared |
+| Shopping Cart | Session Storage | Track items in cart | Until browser closes |
+| User Email | Local Storage (encrypted) | Store user information securely | Until logout |
+| CSRF Token | Generated on page load | Protect against cross-site request forgery | Single session |
 
-**Challenge:**  
-- Encrypt sensitive data (e.g., user email) in local storage using a library like `CryptoJS`.  
 
----
+## Answers to Discussion Questions
 
-### **Task 5: Reflection and Comparison**  
-1. Fill out a comparison table based on the document:  
+### Task 1: User Authentication with Cookies
+- **Why are HttpOnly and Secure flags important for cookies?**
+  - HttpOnly prevents JavaScript access to cookies, protecting against XSS attacks
+  - Secure ensures cookies are only sent over HTTPS connections, preventing man-in-the-middle attacks
+  -
 
-| Criteria          | Cookies          | Local Storage    | Session Storage  |  
-|-------------------|------------------|------------------|------------------|  
-| Storage Limit     | 4KB              | 5-10MB           | 5-10MB           |  
-| Data Persistence  | Configurable     | Permanent        | Session-only     |  
-| Server Accessibility | Yes            | No               | No               |  
+- **How do session cookies differ from persistent cookies?**
+  - Session cookies expire when the browser closes
+  - Persistent cookies have an explicit expiration date and remain until that date
 
-2. **Discussion Questions:**  
-   - When would you use cookies over local storage?  
-   - What are the risks of storing passwords in session storage?  
+### Task 2: Theme Preferences with Local Storage
+- **What happens if local storage exceeds its size limit?**
+  - Browsers typically allow 5-10MB per domain
+  - When exceeded, browsers will throw a QUOTA_EXCEEDED_ERR exception
+  - The application handles this by showing an alert to the user
 
----
+### Task 3: Session-Specific Shopping Cart
+- **Why is session storage suitable for this use case?**
+  - Cart data doesn't need to persist between sessions
+  - It automatically clears when the browser closes
+  - It provides enough storage space for cart data
 
-### **Final Challenge: Integration**  
-Combine all tasks into a single demo application where:  
-- Users log in (cookies).  
-- Customize their theme (local storage).  
-- Add items to a session-specific cart (session storage).  
-- Security measures are applied (CSRF tokens, input sanitization).  
+### Task 5: Storage Comparison
+- **When would you use cookies over local storage?**
+  - When data needs to be sent to the server with every request
+  - For authentication tokens that need to be HttpOnly
+  - When you need cross-subdomain data sharing
 
-**Bonus:** Test the app in incognito mode and explain how storage behaviors differ.  
+- **What are the risks of storing passwords in session storage?**
+  - Session storage isn't encrypted by default
+  - Vulnerable to XSS attacks
+  - Still accessible in the same tab until closed
+  - Not suitable for sensitive data like passwords
