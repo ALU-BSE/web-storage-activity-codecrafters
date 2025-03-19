@@ -99,6 +99,7 @@ project-root/
 - **Why are HttpOnly and Secure flags important for cookies?**
   - HttpOnly prevents JavaScript access to cookies, protecting against XSS attacks
   - Secure ensures cookies are only sent over HTTPS connections, preventing man-in-the-middle attacks
+  -
 
 - **How do session cookies differ from persistent cookies?**
   - Session cookies expire when the browser closes
